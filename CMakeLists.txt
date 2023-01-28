@@ -3,11 +3,14 @@ cmake_minimum_required(VERSION 3.2)
 
 project(lua)
 
+set(CMAKE_CXX_STANDARD 17) # sol2 最低要 c++17
+
 aux_source_directory(src SRC)
 remove(SRC src/lua.c src/luac.c) 
 message(STATUS ${SRC})
 add_definitions(-DLUA_BUILD_AS_DLL)
 add_library(luadll  ${SRC})	# dll
+target_include_directories(luadll PUBLIC src)
 if(UNIX)
     target_link_libraries(luadll m) # 数学库
 endif()
@@ -18,4 +21,5 @@ target_link_libraries(lua luadll)
 add_executable(luac src/luac.c)	# 编译器
 target_link_libraries(luac luadll)
 
+include_directories(${CMAKE_SOURCE_DIR}/3rd/sol2/include)
 add_subdirectory(main)
