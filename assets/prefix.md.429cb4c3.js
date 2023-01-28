@@ -1,0 +1,1 @@
+import{_ as e,c as t,o as a,b as o}from"./app.a802fe1a.js";const u=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"prefix.md"}'),r={name:"prefix.md"},s=o("p",null,"luaL_* lauxlib.h",-1),n=[s];function c(_,i,p,l,d,f){return a(),t("div",null,n)}const x=e(r,[["render",c]]);export{u as __pageData,x as default};
