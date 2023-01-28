@@ -1,0 +1,19 @@
+
+language: node_js
+node_js:
+  - lts/*
+install:
+  - yarn install
+script:
+  - yarn docs:build # npm ci
+deploy:
+  provider: pages
+  skip_cleanup: true
+  local_dir: docs/.vitepress/dist
+  # A token generated on Github allowing Travis to push code on your repository.
+  # Set in the Travis settings page of your repository, as a secure variable.
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  on:
+    branch: main
+    

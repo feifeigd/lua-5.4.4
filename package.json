@@ -1,0 +1,16 @@
+{
+  "name": "lua-5.4.4",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:feifeigd/lua-5.4.4.git",
+  "author": "feifeigd <feifeigd@21cn.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "vitepress": "^1.0.0-alpha.40"
+  },
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs"
+  }
+}
