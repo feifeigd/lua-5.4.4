@@ -17,3 +17,5 @@ target_link_libraries(lua luadll)
 
 add_executable(luac src/luac.c)	# 编译器
 target_link_libraries(luac luadll)
+
+add_subdirectory(main)
