@@ -1,0 +1,30 @@
+name: Windows
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      
+      - name: configure
+        run: |
+          cmake -B build/debug -D CMAKE_BUILD_TYPE=Debug
+          cmake -B build/release -D CMAKE_BUILD_TYPE=Release
+
+      - name: build
+        run: |
+          cmake --build build/debug --config Debug
+          cmake --build build/release --config Release
+        
+      - name: test
+        run: |
+          cd build/debug
+          ctest --build-config Debug
+          cd ../..
+          cd build/release
+          ctest --build-config Release
+          cd ../..
