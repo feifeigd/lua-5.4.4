@@ -21,21 +21,21 @@
 
 
 /*
-** grep "ORDER OPR" if you change these enums  (ORDER OP)
+** grep "ORDER OPR" if you change these enums  (ORDER OP) // 二元操作
 */
 typedef enum BinOpr {
-  /* arithmetic operators */
+  /* arithmetic operators */ // 算术运算
   OPR_ADD, OPR_SUB, OPR_MUL, OPR_MOD, OPR_POW,
   OPR_DIV, OPR_IDIV,
-  /* bitwise operators */
+  /* bitwise operators */ // 位操作
   OPR_BAND, OPR_BOR, OPR_BXOR,
   OPR_SHL, OPR_SHR,
-  /* string operator */
+  /* string operator */ // 字符串拼接 ..
   OPR_CONCAT,
-  /* comparison operators */
+  /* comparison operators */ // 比较操作
   OPR_EQ, OPR_LT, OPR_LE,
   OPR_NE, OPR_GT, OPR_GE,
-  /* logical operators */
+  /* logical operators */ // 逻辑操作
   OPR_AND, OPR_OR,
   OPR_NOBINOPR
 } BinOpr;
@@ -48,7 +48,7 @@ typedef enum BinOpr {
 #define luaK_codeABC(fs,o,a,b,c)	luaK_codeABCk(fs,o,a,b,c,0)
 
 
-typedef enum UnOpr { OPR_MINUS, OPR_BNOT, OPR_NOT, OPR_LEN, OPR_NOUNOPR } UnOpr;
+typedef enum UnOpr { OPR_MINUS, OPR_BNOT, OPR_NOT, OPR_LEN, OPR_NOUNOPR } UnOpr; // 一元操作
 
 
 /* get (pointer to) instruction of given 'expdesc' */

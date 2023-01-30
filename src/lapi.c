@@ -47,7 +47,7 @@ const char lua_ident[] =
 
 
 /* test for pseudo index */
-#define ispseudo(i)		((i) <= LUA_REGISTRYINDEX)
+#define ispseudo(i)		((i) <= LUA_REGISTRYINDEX) // 伪索引
 
 /* test for upvalue */
 #define isupvalue(i)		((i) < LUA_REGISTRYINDEX)

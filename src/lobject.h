@@ -550,7 +550,7 @@ typedef struct Proto {
   int sizeabslineinfo;  /* size of 'abslineinfo' */
   int linedefined;  /* debug information  */
   int lastlinedefined;  /* debug information  */
-  TValue *k;  /* constants used by the function */
+  TValue *k;  /* constants used by the function */ // 常量数组
   Instruction *code;  /* opcodes */
   struct Proto **p;  /* functions defined inside the function */
   Upvaldesc *upvalues;  /* upvalue information */

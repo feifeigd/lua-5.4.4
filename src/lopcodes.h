@@ -12,16 +12,16 @@
 
 /*===========================================================================
   We assume that instructions are unsigned 32-bit integers.
-  All instructions have an opcode in the first 7 bits.
+  All instructions have an opcode in the first 7 bits. // 所有指令的低7bit表示opcode
   Instructions can have the following formats:
 
         3 3 2 2 2 2 2 2 2 2 2 2 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0
         1 0 9 8 7 6 5 4 3 2 1 0 9 8 7 6 5 4 3 2 1 0 9 8 7 6 5 4 3 2 1 0
 iABC          C(8)     |      B(8)     |k|     A(8)      |   Op(7)     |
-iABx                Bx(17)               |     A(8)      |   Op(7)     |
-iAsBx              sBx (signed)(17)      |     A(8)      |   Op(7)     |
-iAx                           Ax(25)                     |   Op(7)     |
-isJ                           sJ(25)                     |   Op(7)     |
+iABx                Bx(17)               |     A(8)      |   Op(7)     | // x 表示后面没有参数了；Bx表示只有 AB参数，Ax表示只有A参数
+iAsBx              sBx (signed)(17)      |     A(8)      |   Op(7)     | // sB is for signed B
+iAx                           Ax(25)                     |   Op(7)     | // Ax 表示只有一个无符号参数
+isJ                           sJ(25)                     |   Op(7)     | // J 表示只有一个参数，而且是有符号的
 
   A signed argument is represented in excess K: the represented value is
   the written unsigned value minus K, where K is half the maximum for the
@@ -29,11 +29,11 @@ isJ                           sJ(25)                     |   Op(7)     |
 ===========================================================================*/
 
 
-enum OpMode {iABC, iABx, iAsBx, iAx, isJ};  /* basic instruction formats */
+enum OpMode {iABC, iABx, iAsBx, iAx, isJ};  /* basic instruction formats */ // 占3个bit
 
 
 /*
-** size and position of opcode arguments.
+** size and position of opcode arguments. // 各个部分到bit长度
 */
 #define SIZE_C		8
 #define SIZE_B		8
@@ -42,9 +42,9 @@ enum OpMode {iABC, iABx, iAsBx, iAx, isJ};  /* basic instruction formats */
 #define SIZE_Ax		(SIZE_Bx + SIZE_A)
 #define SIZE_sJ		(SIZE_Bx + SIZE_A)
 
-#define SIZE_OP		7
+#define SIZE_OP		7 // opcode最大是82，所以 占7个bit
 
-#define POS_OP		0
+#define POS_OP		0 // 各个部分在32bit里面的起始偏移
 
 #define POS_A		(POS_OP + SIZE_OP)
 #define POS_k		(POS_A + SIZE_A)
@@ -190,7 +190,7 @@ enum OpMode {iABC, iABx, iAsBx, iAx, isJ};  /* basic instruction formats */
 
 
 /*
-** Grep "ORDER OP" if you change these enums. Opcodes marked with a (*)
+** Grep "ORDER OP" if you change these enums. Opcodes marked with a (*) // 带 (*) 的，表示后面的 Notes注释里 有额外描述
 ** has extra descriptions in the notes after the enumeration.
 */
 
@@ -201,7 +201,7 @@ typedef enum {
 OP_MOVE,/*	A B	R[A] := R[B]					*/
 OP_LOADI,/*	A sBx	R[A] := sBx					*/
 OP_LOADF,/*	A sBx	R[A] := (lua_Number)sBx				*/
-OP_LOADK,/*	A Bx	R[A] := K[Bx]					*/
+OP_LOADK,/*	A Bx	R[A] := K[Bx]					*/ // K 表示当前函数的常量数组
 OP_LOADKX,/*	A	R[A] := K[extra arg]				*/
 OP_LOADFALSE,/*	A	R[A] := false					*/
 OP_LFALSESKIP,/*A	R[A] := false; pc++	(*)			*/
@@ -267,7 +267,7 @@ OP_LEN,/*	A B	R[A] := #R[B] (length operator)			*/
 OP_CONCAT,/*	A B	R[A] := R[A].. ... ..R[A + B - 1]		*/
 
 OP_CLOSE,/*	A	close all upvalues >= R[A]			*/
-OP_TBC,/*	A	mark variable A "to be closed"			*/
+OP_TBC,/*	A	mark variable A "to be closed"			*/ // TBC is for To Be Close
 OP_JMP,/*	sJ	pc += sJ					*/
 OP_EQ,/*	A B k	if ((R[A] == R[B]) ~= k) then pc++		*/
 OP_LT,/*	A B k	if ((R[A] <  R[B]) ~= k) then pc++		*/
@@ -383,8 +383,8 @@ LUAI_DDEC(const lu_byte luaP_opmodes[NUM_OPCODES];)
 #define getOpMode(m)	(cast(enum OpMode, luaP_opmodes[m] & 7))
 #define testAMode(m)	(luaP_opmodes[m] & (1 << 3))
 #define testTMode(m)	(luaP_opmodes[m] & (1 << 4))
-#define testITMode(m)	(luaP_opmodes[m] & (1 << 5))
-#define testOTMode(m)	(luaP_opmodes[m] & (1 << 6))
+#define testITMode(m)	(luaP_opmodes[m] & (1 << 5))  // in top
+#define testOTMode(m)	(luaP_opmodes[m] & (1 << 6))  // out top
 #define testMMMode(m)	(luaP_opmodes[m] & (1 << 7))
 
 /* "out top" (set top for next instruction) */

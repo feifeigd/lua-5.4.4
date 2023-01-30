@@ -657,7 +657,7 @@ int main (int argc, char **argv) {
   lua_pushcfunction(L, &pmain);  /* to call 'pmain' in protected mode */
   lua_pushinteger(L, argc);  /* 1st argument */
   lua_pushlightuserdata(L, argv); /* 2nd argument */
-  status = lua_pcall(L, 2, 1, 0);  /* do the call */
+  status = lua_pcall(L, 2, 1, 0);  /* do the call */ // 保护模式
   result = lua_toboolean(L, -1);  /* get result */
   report(L, status);
   lua_close(L);
