@@ -38,3 +38,11 @@ jobs:
           cd build/release
           ctest --build-config Release
           cd ../..
+
+      - name: release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files:
+            - build/release/Release/lua.exe
+            - build/release/Release/luac.exe
