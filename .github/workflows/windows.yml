@@ -6,6 +6,7 @@ on: [push]
 env:
   # https://devblogs.microsoft.com/cppblog/improved-parallelism-in-msbuild/
   UseMultiToolTask: true
+  EnforceProcessCountAcrossBuilds: true
 
 jobs:
   build:
