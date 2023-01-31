@@ -43,6 +43,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files:
-            - build/release/Release/lua.exe
-            - build/release/Release/luac.exe
+          files: |
+            build/release/Release/lua.exe
+            build/release/Release/luac.exe
