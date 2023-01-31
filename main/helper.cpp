@@ -1,12 +1,39 @@
 #include "helper.h"
 #include <cstdarg>
+#include <cstdlib>
 #include <string.h> // strdup
 
-#ifndef WIN32
+#ifdef WIN32
+char* strsep(char** stringp, char const* delim) {
+    if (!stringp)
+        return nullptr;
+    char* s = *stringp;
+    if (!s)
+        return nullptr;
+    for (auto tok = s;;)
+    {
+        char c = *s++;
+        auto spanp = delim;
+        char sc{};
+        do
+        {
+            if ((sc = *spanp++) == c)
+            {
+                if (c)
+                    s[-1] = 0;
+                else
+                    return nullptr;
+                *stringp = s;
+                return tok;
+            }
+        } while (sc);
+    }
+    return nullptr;
+}
+#else
 #include <sys/errno.h> // errno
 #endif
 
-#include <cstdlib>
 
 int lua_vnpcall(lua_State* L, char const* table, char const* func, char const* arg, char const* ret, ...){
     
@@ -33,7 +60,7 @@ int lua_vnpcall(lua_State* L, char const* table, char const* func, char const* a
 
         auto f = fnam;
         char* t;
-        while (( t = strsep(&f, "."))) // a.b.c
+        while (( t = strsep(&f, "./"))) // a.b.c
         {
             lua_getfield(L, -1, t);
             if(lua_isnil(L, -1)){

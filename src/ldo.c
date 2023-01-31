@@ -944,12 +944,12 @@ struct SParser {  /* data to 'f_parser' */
   ZIO *z;
   Mbuffer buff;  /* dynamic structure used by the scanner */
   Dyndata dyd;  /* dynamic structures used by the parser */
-  const char *mode;
+  const char *mode; // "b":only binary chunks, "t":only text chunks, "bt":both binary and text.The default is "bt"
   const char *name;
 };
 
 
-static void checkmode (lua_State *L, const char *mode, const char *x) {
+static void checkmode (lua_State *L, const char *mode, const char *x) { // x=binary|text,只检测首个字符
   if (mode && strchr(mode, x[0]) == NULL) {
     luaO_pushfstring(L,
        "attempt to load a %s chunk (mode is '%s')", x, mode);

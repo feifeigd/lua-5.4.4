@@ -38,7 +38,7 @@
 ** bit 6: whether value is collectable
 */
 
-/* add variant bits to a type */
+/* add variant bits to a type */ // t is for tag
 #define makevariant(t,v)	((t) | ((v) << 4))
 
 

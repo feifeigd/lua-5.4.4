@@ -760,21 +760,21 @@ static int skipBOM (LoadF *lf) {
 ** first "valid" character of the file (after the optional BOM and
 ** a first-line comment).
 */
-static int skipcomment (LoadF *lf, int *cp) {
+static bool skipcomment (LoadF *lf, int *cp) {
   int c = *cp = skipBOM(lf);
   if (c == '#') {  /* first line is a comment (Unix exec. file)? */
     do {  /* skip first line */
       c = getc(lf->f);
     } while (c != EOF && c != '\n');
     *cp = getc(lf->f);  /* skip end-of-line, if present */
-    return 1;  /* there was a comment */
+    return true;  /* there was a comment */
   }
-  else return 0;  /* no comment */
+  else return false;  /* no comment */
 }
 
 
 LUALIB_API int luaL_loadfilex (lua_State *L, const char *filename,
-                                             const char *mode) {
+                                             const char *mode) { // filename 文件路径或者是stdin
   LoadF lf;
   int status, readstatus;
   int c;
