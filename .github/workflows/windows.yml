@@ -4,6 +4,8 @@ on: [push]
 
 # 设置环境变量
 env:
+  # https://cmake.org/cmake/help/latest/envvar/CTEST_OUTPUT_ON_FAILURE.html
+  CTEST_OUTPUT_ON_FAILURE: true
   # https://devblogs.microsoft.com/cppblog/improved-parallelism-in-msbuild/
   UseMultiToolTask: true
   EnforceProcessCountAcrossBuilds: true
@@ -18,11 +20,13 @@ jobs:
       
       - name: configure
         run: |
+          $env:MultiProcMaxCount = ((Get-CimInstance -ClassName Win32_Processor | Measure-Object -Property NumberOfLogicalProcessors -Sum).Sum + 1)
           cmake -B build/debug -D CMAKE_BUILD_TYPE=Debug
           cmake -B build/release -D CMAKE_BUILD_TYPE=Release
 
       - name: build
         run: |
+          $env:MultiProcMaxCount = ((Get-CimInstance -ClassName Win32_Processor | Measure-Object -Property NumberOfLogicalProcessors -Sum).Sum + 1)
           cmake --build build/debug --config Debug
           cmake --build build/release --config Release
         
