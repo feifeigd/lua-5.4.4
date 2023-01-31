@@ -14,6 +14,7 @@ add_definitions(-DLUA_BUILD_AS_DLL)
 add_library(luadll SHARED ${SRC})	# dll
 target_include_directories(luadll PUBLIC src)
 if(UNIX)
+    target_link_libraries(lua_static m) # 数学库
     target_link_libraries(luadll m) # 数学库
 endif()
 
