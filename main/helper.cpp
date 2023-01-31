@@ -1,7 +1,11 @@
 #include "helper.h"
 #include <cstdarg>
 #include <string.h> // strdup
+
+#ifndef WIN32
 #include <sys/errno.h> // errno
+#endif
+
 #include <cstdlib>
 
 int lua_vnpcall(lua_State* L, char const* table, char const* func, char const* arg, char const* ret, ...){

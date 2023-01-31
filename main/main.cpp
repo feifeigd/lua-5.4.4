@@ -6,7 +6,10 @@
 
 #include <cassert>
 #include <iostream>
+
+#ifndef WIN32
 #include <unistd.h> // getcwd
+#endif
 
 void stackDump(lua_State* L);
 
@@ -55,9 +58,13 @@ static int report (lua_State *L, int status) {
   return status;
 }
 
+static int l_sin(lua_State* L){
+    return 0;
+}
+
 int main(int argc, char** argv){
     char buf[256];
-    cout << getcwd(buf, sizeof buf - 1) << endl; // 当前工作目录
+    // cout << getcwd(buf, sizeof buf - 1) << endl; // 当前工作目录
     
     LuaState L;
 
