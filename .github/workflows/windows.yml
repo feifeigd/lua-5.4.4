@@ -2,6 +2,11 @@ name: Windows
 
 on: [push]
 
+# 设置环境变量
+env:
+  # https://devblogs.microsoft.com/cppblog/improved-parallelism-in-msbuild/
+  UseMultiToolTask: true
+
 jobs:
   build:
     runs-on: windows-latest
