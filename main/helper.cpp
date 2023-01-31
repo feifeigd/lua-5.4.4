@@ -4,6 +4,9 @@
 #include <string.h> // strdup
 
 #ifdef WIN32
+
+#define strdup _strdup
+
 char* strsep(char** stringp, char const* delim) {
     if (!stringp)
         return nullptr;
@@ -118,7 +121,7 @@ int lua_vnpcall(lua_State* L, char const* table, char const* func, char const* a
             }
         }
     }
-    auto rets = ret ? strlen(ret) : 0; // 返回值个数
+    int rets = int(ret ? strlen(ret) : 0); // 返回值个数
     if (auto retval = lua_pcall(L, args, rets, 0))
     {
         va_end(ap);
